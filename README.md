@@ -1,6 +1,9 @@
 
 
-Demo app for 
+Demo App using following tech:
+- keycloaker and spring security for authetication/authorization
+- JPA for db persistance
+- Thymeleaf for mvc templating 
 
 
 ## Note
@@ -24,4 +27,11 @@ Login to the admin at localhost:8180 using admin/admin
 	- redirect is set to the spring boot application url http://localhost:8080/*
 3. Create role 'ROLE_USER'
 4. Create a user and add role 'ROLE_USER'
+
+
+## H2 console admin
+Point browser to localhost:8080/h2
+
+
+
 

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import wn.demo.pociam.dto.NoteCreateRequest;
+import wn.demo.pociam.dto.NoteRequest;
 import wn.demo.pociam.dto.NoteDto;
 import wn.demo.pociam.dto.NoteTextDto;
 import wn.demo.pociam.entity.Note;
@@ -35,7 +35,7 @@ public class NoteService {
     }
 
     @Transactional
-    public NoteDto createNote(String userId, NoteCreateRequest noteCreateRequest) {
+    public NoteDto createNote(String userId, NoteRequest noteCreateRequest) {
         String title = (noteCreateRequest.getTitle() != null && noteCreateRequest.getTitle().length() > 0 ) ?
                 noteCreateRequest.getTitle() : 
                     noteCreateRequest.getText().substring(0, 
@@ -76,6 +76,20 @@ public class NoteService {
         noteText.setText(text);
         this.noteTextRepository.save(noteText);
     }
+    @Transactional
+    public void update(String userid, NoteRequest noteRequest) {
+        Note note = this.noteRepository.findNoteByUseridAndId(userid, noteRequest.getId())
+                .orElseThrow(()-> new RuntimeException("User note not found"));
+        note.setTitle(noteRequest.getTitle());
+        
+        NoteText nt = this.noteTextRepository.findById(note.getId())
+                .orElseThrow(()-> new RuntimeException("User note not found"));
+        nt.setText(noteRequest.getText());
+        
+        this.noteRepository.saveAndFlush(note);
+        this.noteTextRepository.save(nt);
+    }
+    
     
     
     public List<NoteDto> findNoteByOwner(String userid) {
@@ -107,7 +121,7 @@ public class NoteService {
     
     
     public NoteTextDto fromNoteText(NoteText noteText) {
-        NoteTextDto dto = new NoteTextDto(noteText.getId(),
+        NoteTextDto dto = new NoteTextDto(noteText.getId(), noteText.getNote().getTitle(),
                 noteText.getText());
         return dto;
     }

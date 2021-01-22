@@ -1,6 +1,7 @@
 package wn.demo.pociam.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -15,7 +16,7 @@ public class NoteText {
     @Lob
     private String text;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
     private Note note;

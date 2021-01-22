@@ -1,11 +1,14 @@
 package wn.demo.pociam.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +20,7 @@ public class Note extends BaseEntity{
     @Column(nullable = false)
     private String title;
 
-    
+
     
     public Note() {
         super();
@@ -28,13 +31,15 @@ public class Note extends BaseEntity{
         this.title = title;
     }
     
-    
+
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+        super.getAudit().update();
     }
 
     public String getUserid() {
@@ -49,6 +54,11 @@ public class Note extends BaseEntity{
     public String toString() {
         return "Note [userid=" + userid + ", title=" + title + ", toString()=" + super.toString() + "]";
     }
+
+    
+    
+
+
 
     
     

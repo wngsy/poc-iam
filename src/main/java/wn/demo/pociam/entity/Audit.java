@@ -3,12 +3,17 @@ package wn.demo.pociam.entity;
 
 import java.util.Date;
 import javax.persistence.Embeddable;
+import javax.persistence.EntityListeners;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Embeddable
+//@EntityListeners(AuditingEntityListener.class)
 public class Audit {
 
     @Temporal(TemporalType.TIMESTAMP)
